@@ -1,5 +1,5 @@
 # =============================================================================
-# Presto C++ (Prestissimo) Cluster with Dedicated Metastore
+# Presto Cluster with Dedicated Metastore
 # =============================================================================
 
 services:
