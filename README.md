@@ -1,4 +1,4 @@
-# Presto Benchmarking Infrastructure for TPC-H and TPC-DS
+# Presto Benchmarking for TPC-H and TPC-DS Data
 
 ![Presto Benchmarking Architecture](./architecture.png)
 
