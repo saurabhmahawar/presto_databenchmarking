@@ -1,0 +1,9 @@
+{
+  "name": "tpcds_smoke_test",
+  "catalog": "iceberg",
+  "schema": "tpcds_sf10",
+  "runs": 1,
+  "query_files": [
+    "benchmarks/tpc-ds/queries/query_01.sql"
+  ]
+}

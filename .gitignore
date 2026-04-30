@@ -1,0 +1,19 @@
+# Security: Google Cloud Service Account Keys
+gcs-key.json
+
+# Local Data Volumes
+presto-spill/
+mysql-data/
+metastore-db-data-presto/
+
+# Logs
+*.log
+pbench/tpch_sf10_iceberg_*/
+pbench/tpcds_sf10_iceberg_*/
+
+# OS Specific
+.DS_Store
+
+# IDEs
+.vscode/
+.idea/

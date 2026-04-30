@@ -1,0 +1,13 @@
+{
+  "name": "system_queries",
+  "description": "Monitoring local system catalog",
+  "catalog": "system",
+  "schema": "runtime",
+  "runs": 3,
+  "save_json": true,
+  "save_output": true,
+  "queries": [
+    "SELECT * FROM system.runtime.nodes",
+    "SELECT state, count(*) FROM system.runtime.tasks GROUP BY state"
+  ]
+}

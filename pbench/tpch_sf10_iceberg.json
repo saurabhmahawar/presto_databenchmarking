@@ -1,0 +1,33 @@
+{
+  "name": "tpch_sf10_iceberg",
+  "description": "TPC-H SF-10 Benchmarking on Iceberg",
+  "catalog": "iceberg",
+  "schema": "tpch_sf10",
+  "runs": 1,
+  "save_json": true,
+  "save_output": true,
+  "query_files": [
+    "benchmarks/tpch/queries/query_01.sql",
+    "benchmarks/tpch/queries/query_02.sql",
+    "benchmarks/tpch/queries/query_03.sql",
+    "benchmarks/tpch/queries/query_04.sql",
+    "benchmarks/tpch/queries/query_05.sql",
+    "benchmarks/tpch/queries/query_06.sql",
+    "benchmarks/tpch/queries/query_07.sql",
+    "benchmarks/tpch/queries/query_08.sql",
+    "benchmarks/tpch/queries/query_09.sql",
+    "benchmarks/tpch/queries/query_10.sql",
+    "benchmarks/tpch/queries/query_11.sql",
+    "benchmarks/tpch/queries/query_12.sql",
+    "benchmarks/tpch/queries/query_13.sql",
+    "benchmarks/tpch/queries/query_14.sql",
+    "benchmarks/tpch/queries/query_15.sql",
+    "benchmarks/tpch/queries/query_16.sql",
+    "benchmarks/tpch/queries/query_17.sql",
+    "benchmarks/tpch/queries/query_18.sql",
+    "benchmarks/tpch/queries/query_19.sql",
+    "benchmarks/tpch/queries/query_20.sql",
+    "benchmarks/tpch/queries/query_21.sql",
+    "benchmarks/tpch/queries/query_22.sql"
+  ]
+}

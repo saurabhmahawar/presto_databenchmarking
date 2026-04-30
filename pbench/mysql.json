@@ -1,0 +1,6 @@
+{
+  "username": "pbench",
+  "password": "pbench_password",
+  "server": "127.0.0.1:3307",
+  "database": "pbench"
+}
