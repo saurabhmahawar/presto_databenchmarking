@@ -90,3 +90,8 @@ Benchmark results are streamed in real-time to Grafana:
 
 ![TPC-H Results](./TPC-H%20Grafana%20Dashboard.png)
 ![TPC-DS Results](./TPC-DS%20Grafana%20Dashboard.png)
+
+## Community (Stay Connected with Presto Ecosystem)
+*  Official Website: [prestodb.io](https://prestodb.io/)
+*  Official Docs: [https://prestodb.github.io/docs/0.297/index.html](https://prestodb.github.io/docs/0.297/index.html)
+*  Join Slack Community: [https://communityinviter.com/apps/prestodb/prestodb](https://communityinviter.com/apps/prestodb/prestodb)
