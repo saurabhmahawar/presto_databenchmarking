@@ -1,5 +1,8 @@
 # =============================================================================
-# Presto Cluster with Dedicated Metastore
+# Presto Java Benchmarking Cluster for TPC-H and TPC-DS
+# =============================================================================
+# This infrastructure orchestrates a Presto cluster (Coordinator + Worker),
+# a Hive Metastore metadata layer, and a MySQL/Grafana observability stack.
 # =============================================================================
 
 services:
@@ -144,5 +147,3 @@ volumes:
 networks:
   presto-network:
     driver: bridge
-
-

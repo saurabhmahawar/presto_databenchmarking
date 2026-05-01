@@ -4,18 +4,6 @@
   =============================================================================
   This file tells Hadoop (and therefore Presto & Hive Metastore) how to
   handle gs:// URIs — Google Cloud Storage paths.
-
-  Without this file, any reference to gs://your-bucket/path would fail with:
-    "No FileSystem for scheme: gs"
-
-  How it works:
-    1. fs.gs.impl: Registers the GCS Hadoop connector class as the handler
-       for the "gs" filesystem scheme.
-    2. fs.AbstractFileSystem.gs.impl: Same, but for the newer AbstractFileSystem API.
-    3. google.cloud.auth.*: Configures service account authentication using
-       a JSON key file (the same file used by gcloud CLI).
-
-  SECURITY NOTE: Never commit gcs-key.json to version control!
   =============================================================================
 -->
 <configuration>

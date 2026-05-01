@@ -1,5 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+  =============================================================================
+  hive-site.xml — Hive Metastore Service Configuration
+  =============================================================================
+  This file configures the Hive Metastore (HMS) service. It defines how the
+  service connects to its persistent PostgreSQL database and how it exposes
+  its Thrift interface to Presto.
+  =============================================================================
+-->
 <configuration>
   <property>
     <name>javax.jdo.option.ConnectionURL</name>
@@ -43,7 +50,7 @@
   </property>
   <property>
     <name>fs.gs.project.id</name>
-    <value>gen-lang-client-0674912342</value>
+    <value>Your Google Cloud Project ID</value>
   </property>
   <property>
     <name>google.cloud.auth.service.account.enable</name>
