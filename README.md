@@ -1,4 +1,4 @@
-# Presto Benchmarking for TPC-H and TPC-DS Data
+# Benchmarking Presto on TPC-H and TPC-DS Data (Iceberg & Google Cloud Storage)
 
 ![Presto Benchmarking Architecture](./architecture.png)
 
