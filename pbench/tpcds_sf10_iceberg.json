@@ -1,8 +1,11 @@
 {
   "name": "tpcds_sf10_iceberg",
+  "description": "TPC-DS SF-10 Benchmarking on Iceberg",
   "catalog": "iceberg",
   "schema": "tpcds_sf10",
   "runs": 1,
+  "save_json": true,
+  "save_output": true,
   "query_files": [
     "benchmarks/tpc-ds/queries/query_01.sql",
     "benchmarks/tpc-ds/queries/query_02.sql",

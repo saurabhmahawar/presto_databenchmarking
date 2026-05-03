@@ -9,8 +9,8 @@ This repository provides a standardized deployment for Presto (Java) optimized f
 The datasets in this environment were prepared using a three-layer "Raw-to-Gold" architecture:
 
 1.  **Raw Generation**: TPC-H and TPC-DS datasets were generated at Scale Factor 10 using standard generators (`tpch-gen` and `tpcds-gen`).
-2.  **Schema Mapping (Raw Layer)**: External Hive tables were created to map the raw `.dat` files on GCS. This layer handles CSV parsing and trailing delimiters.
-3.  **Optimization (Gold Layer)**: Data was migrated into managed Iceberg tables using `INSERT` statements with explicit type casting. This ensures the Parquet files are optimized for analytical performance.
+2.  **Schema Mapping (Raw Layer)**: External Hive tables with a trailing dummy column were created to map the raw `.dat` files on GCS. This layer handles CSV parsing.
+3.  **Optimization (Gold Layer)**: Data was migrated into managed Iceberg tables using `INSERT` statements with explicit type casting and hidden partitioning (e.g., `lineitem` partitioned by month). This ensures the Parquet files are optimized for analytical performance.
 4.  **Statistics Collection**: Immediately following migration, `ANALYZE` was performed on all tables to enable Cost-Based Optimization (CBO) in Presto.
 
 ## System Architecture
@@ -49,28 +49,29 @@ docker-compose up -d
 Ensure all services reach a `healthy` state before proceeding.
 
 ### 2. Schema and Table Initialization
-If your Iceberg data already exists on GCS, you must register the schema and tables in the Metastore:
+Before benchmarking, you must migrate your raw TPC-DS data into the optimized Iceberg Gold layer. 
 
 ```sql
--- Connect via presto-cli
-docker exec -it presto-coordinator presto-cli
+-- Connect via presto-cli directly to the iceberg catalog
+docker exec -it presto-coordinator presto --catalog iceberg
 
--- Create the target schema
-CREATE SCHEMA IF NOT EXISTS iceberg.tpcds_sf10;
+-- Create the target schema with explicitly defined GCS location
+CREATE SCHEMA IF NOT EXISTS tpcds_sf10
+WITH (location = 'gs://your-bucket-name/path/to/tpcds_sf10/');
 
--- Register an existing Iceberg table
-CALL iceberg.system.register_table(
-  schema_name => 'tpcds_sf10',
-  table_name => 'customer',
-  table_location => 'gs://your-bucket-name/path/to/tpcds_sf10/customer'
-);
+-- Note: After creating the schema, execute the CTAS (Create Table As Select) 
+-- statements to migrate your raw data into this Iceberg schema.
 ```
 
 ### 3. Execute Benchmarks
-Navigate to the `pbench` directory and execute the suite:
+Navigate to the `pbench` directory and execute the suite. 
+*(Pro-Tip: Always discard the results of the first run. The JVM needs time to warm up and JIT-compile the execution paths.)*
+
 ```bash
 cd pbench
-./pbench run --mysql mysql.json tpch_sf10_iceberg.json
+
+# Run the TPC-DS benchmark suite
+./pbench run --mysql mysql.json tpcds_sf10_iceberg.json
 ```
 
 ## Configuration Specifications
@@ -82,16 +83,19 @@ The worker node is configured for high-concurrency analytical queries:
 *   **Disk Spilling**: Enabled via `/tmp/presto-spill` (mounted to the host) to handle joins that exceed physical memory.
 
 ### GCS Connectivity
-The GCS connector is configured in `hive-metastore/core-site.xml`. Ensure the `fs.gs.impl` and authentication properties match your environment requirements.
+The GCS connector is configured in `hive-metastore/core-site.xml`. This single file drives GCS connectivity for the entire cluster (Coordinator, Worker, and Metastore).
 
 ## Visualization
-Benchmark results are streamed in real-time to Grafana:
-[http://localhost:3000/d/benchmarking-dashboard](http://localhost:3000/d/benchmarking-dashboard)
+Benchmark results are streamed in real-time to MySQL. You can connect the local Grafana instance to visualize the execution metrics:
+
+1. Navigate to `http://localhost:3000` (admin/admin).
+2. Connect a new MySQL Datasource (`mysql:3306`, Database: `pbench`).
+3. Build dashboards querying the `run` and `query` tables.
 
 ![TPC-H Results](./TPC-H%20Grafana%20Dashboard.png)
 ![TPC-DS Results](./TPC-DS%20Grafana%20Dashboard.png)
 
 ## Community (Stay Connected with Presto Ecosystem)
 *  Official Website: [prestodb.io](https://prestodb.io/)
-*  Official Docs: [https://prestodb.github.io/docs/0.297/index.html](https://prestodb.github.io/docs/0.297/index.html)
-*  Join Slack Community: [https://communityinviter.com/apps/prestodb/prestodb](https://communityinviter.com/apps/prestodb/prestodb)
+*  Official Docs: [prestodb.github.io/docs](https://prestodb.github.io/docs/0.297/index.html)
+*  Join Slack Community: [Join Here](https://communityinviter.com/apps/prestodb/prestodb)
